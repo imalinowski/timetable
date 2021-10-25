@@ -59,7 +59,9 @@ role - студент, преподаватель
 | name | type | constrains |
 | ---- | ---- | ---------- |
 |location_id|Integer| primary_key|
-|name | String(20)| not null|
+|name | String(20) | not null|
+|coordinates | String(100) | nullable |
+
 
 ## Общие ограничения целостности
 * Между таблицами `Event` и `Location` отношение `Many to one`. 
