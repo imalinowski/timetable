@@ -16,6 +16,8 @@ University project
 
 Авторизация происходит через студенческий Google-аккаунт СПбГУ.
 
+Дополнительно: возможность оставлять вопросы и комментарии к событиям.
+
 ## Наименование
 
 TimeTable
@@ -33,8 +35,16 @@ TimeTable
 | email| String(100)| unique, not null|
 | name | String(100)| not null |
 | role | enum | nullable |
+| group_id | Integer | nullable |
 
 role - студент, преподаватель
+
+### Group
+| name | type | constrains |
+| ---- | ---- | ---------- |
+| id   | Integer|  primary_key|
+| name | String(100) | unique, not null|
+| users | String (json) | nullable |
 
 ### Event
 | name | type | constrains |
