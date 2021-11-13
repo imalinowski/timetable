@@ -44,7 +44,6 @@ role - студент, преподаватель
 | ---- | ---- | ---------- |
 | id   | Integer|  primary_key|
 | name | String(100) | unique, not null|
-| users | String (json) | nullable |
 
 ### Event
 | name | type | constrains |
