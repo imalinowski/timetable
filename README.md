@@ -44,7 +44,6 @@ role - студент, преподаватель
 | ---- | ---- | ---------- |
 | id   | Integer|  primary_key|
 | name | String(100) | unique, not null|
-| users | String (json) | nullable |
 
 ### Event
 | name | type | constrains |
@@ -72,6 +71,7 @@ role - студент, преподаватель
 User Student (Кол-во: неограничено)
 * Просматривать данные о мероприятиях
 * Записываться на мероприятия 
+* Оставлять вопросы и комментарии к событиям
 
 User Teacher (10-100)
 * То же, что и `Student`
