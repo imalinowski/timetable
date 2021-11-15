@@ -9,9 +9,10 @@ fun Application.configureRouting() {
     // Starting point for a Ktor app:
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondText("\n\n\n\nServer works!")
         }
     }
     routing {
+
     }
 }

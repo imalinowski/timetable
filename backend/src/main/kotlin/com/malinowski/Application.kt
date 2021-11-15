@@ -1,9 +1,11 @@
 package com.malinowski
 
-import com.jetbrains.handson.httpapi.routes.registerCustomerRoutes
-import com.jetbrains.handson.httpapi.routes.registerOrderRoutes
+import com.malinowski.plugins.configureRouting
+import com.malinowski.routes.*
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -18,7 +20,11 @@ fun Application.module(testing: Boolean = true) {
     install(ContentNegotiation) {
         json()
     }
-    registerCustomerRoutes()
-    registerOrderRoutes()
+
+    configureRouting()
+    registerUserRoutes()
+    registerLocationRoutes()
+    registerEventRoutes()
+    registerGroupsRoutes()
 }
 

@@ -1,4 +1,4 @@
-package com.jetbrains.handson.httpapi.routes
+package com.malinowski.routes
 
 import com.jetbrains.handson.httpapi.models.Customer
 import com.jetbrains.handson.httpapi.models.customerStorage
