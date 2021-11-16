@@ -1,8 +1,7 @@
 package com.malinowski
 
+import com.malinowski.models.GroupTable
 import com.malinowski.models.UserTable
-import com.malinowski.models.toUsers
-import com.malinowski.models.users
 import com.malinowski.plugins.configureRouting
 import com.malinowski.routes.registerEventRoutes
 import com.malinowski.routes.registerGroupsRoutes
@@ -13,8 +12,10 @@ import io.ktor.features.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -24,6 +25,7 @@ fun main() {
 }
 
 fun Application.module(testing: Boolean = true) {
+    initDB()
     install(ContentNegotiation) {
         json()
     }
@@ -32,25 +34,18 @@ fun Application.module(testing: Boolean = true) {
     registerLocationRoutes()
     registerEventRoutes()
     registerGroupsRoutes()
-    test()
 }
 
-val db by lazy {
-    Database.connect("jdbc:postgresql://localhost:5432/test_db", driver = "org.postgresql.Driver", user = "malinowski")
-}
-
-fun test() {
-    db
+fun initDB() {
+    Database.connect(
+        url = "jdbc:postgresql://localhost:5432/test_db",
+        driver = "org.postgresql.Driver",
+        user = "malinowski",
+        password = ""
+    )
     transaction {
-        // print sql to std-out
         addLogger(StdOutSqlLogger)
         SchemaUtils.create(UserTable)
-
-        // 'select *' SQL: SELECT Cities.id, Cities.name FROM Cities
-        users.addAll(UserTable.selectAll().toUsers())
+        SchemaUtils.create(GroupTable)
     }
-}
-
-object Cities : IntIdTable() {
-    val name = varchar("name", 50)
 }

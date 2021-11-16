@@ -4,9 +4,19 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "name": "Mary test",
-  "email": "mary.smith test@company.com",
+  "name": "Ilya Malinowski",
+  "email": "st076561@student.spbu.ru",
+  "role": "Student",
   "group_id": 1
+}
+
+###
+POST http://localhost:8080/group
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "some group"
 }
 
 ###
