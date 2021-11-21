@@ -9,10 +9,9 @@ import io.ktor.routing.*
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.transactions.transaction
 
-val events by lazy {
-    transaction {
-        EventEntity.all().toEvents().toMutableList()
-    }
+var events = getEventsDB()
+fun getEventsDB() = transaction {
+    EventEntity.all().toEvents().toMutableList()
 }
 
 fun Route.eventRouting() {
@@ -33,7 +32,6 @@ fun Route.eventRouting() {
         post {
             try {
                 val event = call.receive<Event>()
-                events.add(event)
                 val id = transaction {
                     EventEntity.new {
                         name = event.name
@@ -42,6 +40,7 @@ fun Route.eventRouting() {
                         // members = SizedCollection(event.members)
                     }.id
                 }
+                events = getEventsDB()
                 call.respondText("Event stored correctly ID = $id", status = HttpStatusCode.Created)
             } catch (e: Throwable) {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
@@ -68,7 +67,7 @@ fun Route.eventRouting() {
                     }
                     val copy = event.members.toMutableList().apply { add(user) }
                     event.members = SizedCollection(copy)
-                    // todo update cache
+                    events = getEventsDB()
                 }
                 call.respondText("User added correctly", status = HttpStatusCode.Created)
             } catch (e: Throwable) {

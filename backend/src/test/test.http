@@ -40,5 +40,5 @@ Content-Type: application/json
 GET http://localhost:8080/event
 
 ###
-POST http://localhost:8080/event/1/adduser/2
+POST http://localhost:8080/event/1/adduser/1
 Content-Type: application/json
