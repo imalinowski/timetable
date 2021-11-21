@@ -2,7 +2,7 @@ package com.malinowski.routes
 
 import com.malinowski.models.User
 import com.malinowski.models.UserEntity
-import com.malinowski.models.toGroups
+import com.malinowski.models.toUsers
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 val users by lazy {
     transaction {
-        UserEntity.all().toGroups().toMutableList()
+        UserEntity.all().toUsers().toMutableList()
     }
 }
 

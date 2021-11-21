@@ -24,14 +24,14 @@ class GroupEntity(id: EntityID<Int>) : IntEntity(id) {
 }
 
 fun SizedIterable<GroupEntity>.toGroups(): List<Group> {
-    val users = mutableListOf<Group>()
+    val group = mutableListOf<Group>()
     this.onEach {
-        users.add(
+        group.add(
             Group(
                 id = it.id.value,
                 name = it.name,
             )
         )
     }
-    return users
+    return group
 }

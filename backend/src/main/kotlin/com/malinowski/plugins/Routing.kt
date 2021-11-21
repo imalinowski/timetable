@@ -1,8 +1,8 @@
 package com.malinowski.plugins
 
-import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.response.*
+import io.ktor.routing.*
 
 fun Application.configureRouting() {
 
@@ -11,8 +11,5 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("\n\n\n\nServer works!")
         }
-    }
-    routing {
-
     }
 }

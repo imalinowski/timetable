@@ -38,7 +38,7 @@ class UserEntity(id: EntityID<Int>) : IntEntity(id) {
     var groupId by UserTable.groupId
 }
 
-fun SizedIterable<UserEntity>.toGroups(): List<User> {
+fun SizedIterable<UserEntity>.toUsers(): List<User> {
     val users = mutableListOf<User>()
     this.onEach {
         users.add(

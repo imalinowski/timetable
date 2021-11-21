@@ -50,8 +50,15 @@ role - студент, преподаватель
 | ---- | ---- | ---------- |
 | name |string(100)|unique, not null|
 | location_id |Integer| not null|
-| members | string (1000) | nullable |
+| members | reference to UserEvent | nullable |
 |time | timedate | not_null | 
+
+### UserEvent
+| name | type | constrains |
+| ---- | ---- | ---------- |
+| user_id | Integer |not null|
+| event_id | Integer | not null|
+Строка озночает что user (с id = user_id) участник event (с id = event_id)
 
 ### Location
 Место мероприятия (Петергоф, Василиевский Остров и т.д)

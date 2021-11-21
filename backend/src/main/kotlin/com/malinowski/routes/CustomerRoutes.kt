@@ -49,7 +49,7 @@ fun Route.customerRouting() {
     }
 }
 
-fun Application.registerCustomerRoutes(){
+fun Application.registerCustomerRoutes() {
     routing {
         customerRouting()
     }
