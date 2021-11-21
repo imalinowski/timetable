@@ -32,7 +32,11 @@ Content-Type: application/json
 {
   "id": 1,
   "name": "birthday",
-  "location_id": "1",
+  "location": {
+    "id" : 0,
+    "name": "test_location",
+    "coordinates" : "test coordinates"
+  },
   "time": 930
 }
 
@@ -42,3 +46,16 @@ GET http://localhost:8080/event
 ###
 POST http://localhost:8080/event/1/adduser/1
 Content-Type: application/json
+
+###
+GET http://localhost:8080/location
+
+###
+POST http://localhost:8080/location
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "university",
+  "coordinates": "1"
+}

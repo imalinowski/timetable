@@ -1,9 +1,6 @@
 package com.malinowski
 
-import com.malinowski.models.EventTable
-import com.malinowski.models.GroupTable
-import com.malinowski.models.UserEventTable
-import com.malinowski.models.UserTable
+import com.malinowski.models.*
 import com.malinowski.plugins.configureRouting
 import com.malinowski.routes.registerEventRoutes
 import com.malinowski.routes.registerGroupsRoutes
@@ -51,5 +48,6 @@ fun initDB() {
         SchemaUtils.create(GroupTable)
         SchemaUtils.create(EventTable)
         SchemaUtils.create(UserEventTable)
+        SchemaUtils.create(LocationTable)
     }
 }

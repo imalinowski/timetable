@@ -1,6 +1,5 @@
 package com.malinowski.models
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -12,14 +11,14 @@ import org.jetbrains.exposed.sql.SizedIterable
 data class Event(
     val id: Int,
     val name: String,
-    @SerialName("location_id") val locationId: Int,
+    val location: Location,
     val members: List<User> = listOf(),
     val time: Long,
 )
 
 object EventTable : IntIdTable() {
     val name = varchar("name", 100)
-    val locationId = integer("location_id")
+    val locationId = reference("location_id", LocationTable) // many to one reference
     val time = long("time_date")
 }
 
@@ -27,7 +26,7 @@ class EventEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<EventEntity>(EventTable)
 
     var name by EventTable.name
-    var locationId by EventTable.locationId
+    var locationId by LocationEntity referencedOn EventTable.locationId
     var time by EventTable.time
     var members by UserEntity via UserEventTable
 }
@@ -39,7 +38,11 @@ fun SizedIterable<EventEntity>.toEvents(): List<Event> {
             Event(
                 id = it.id.value,
                 name = it.name,
-                locationId = it.locationId,
+                location = Location(
+                    id = it.locationId.id.value,
+                    name = it.locationId.name,
+                    coordinates = it.locationId.coordinates
+                ),
                 time = it.time,
                 members = it.members.toUsers()
             )

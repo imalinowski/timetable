@@ -22,17 +22,16 @@ fun Route.userRouting() {
             call.respondText(users.joinToString("\n"), status = HttpStatusCode.Accepted)
         }
         get("{id}") {
-            val id = call.parameters["id"] ?: return@get call.respondText(
+            val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(
                 "Missing or malformed id",
                 status = HttpStatusCode.BadRequest
             )
-            call.respondText("\n${users[id.toInt()]}", status = HttpStatusCode.Accepted)
+            call.respondText("\n${users[id]}", status = HttpStatusCode.Accepted)
         }
         post {
             try {
                 val user = call.receive<User>()
                 users.add(user)
-                // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
                 val id = transaction {
                     UserEntity.new {
                         name = user.name

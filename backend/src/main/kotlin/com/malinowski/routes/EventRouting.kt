@@ -35,7 +35,10 @@ fun Route.eventRouting() {
                 val id = transaction {
                     EventEntity.new {
                         name = event.name
-                        locationId = event.locationId
+                        locationId = LocationEntity.new {
+                            name = event.location.name
+                            coordinates = event.location.coordinates
+                        }
                         time = event.time
                         // members = SizedCollection(event.members)
                     }.id
