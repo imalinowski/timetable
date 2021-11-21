@@ -58,7 +58,8 @@ role - студент, преподаватель
 | ---- | ---- | ---------- |
 | user_id | Integer |not null|
 | event_id | Integer | not null|
-Строка озночает что user (с id = user_id) участник event (с id = event_id)
+
+Строка означает что user (с id = user_id) участник event (с id = event_id)
 
 ### Location
 Место мероприятия (Петергоф, Василиевский Остров и т.д)
