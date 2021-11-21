@@ -1,5 +1,6 @@
 import React from "react";
 import {Board} from "./board"
+import axios from "axios";
 
 export class Game extends React.Component {
     constructor(props) {
