@@ -24,7 +24,7 @@ fun main() {
 }
 
 fun Application.module(testing: Boolean = true) {
-    
+
     install(DefaultHeaders){
         header("Access-Control-Allow-Origin", "*")
     }
