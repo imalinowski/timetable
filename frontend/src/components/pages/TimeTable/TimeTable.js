@@ -26,12 +26,6 @@ export default function TimeTable() {
   const day = weekDayInd(today.getDay());
   const [selectedDate, setSelectedDate] = useState(getChangedDate(day));
   const [selectedDay, setSelectedDay] = useState(day);
-  const [dep] = useState(
-    Number(localStorage.getItem(STORAGE_KEYS.DEPARTMENT)) || 0
-  );
-  const [sem] = useState(
-    Number(localStorage.getItem(STORAGE_KEYS.SEMESTER)) || 0
-  );
 
   const handleDayChange = (day) => {
     setSelectedDate(getChangedDate(day));

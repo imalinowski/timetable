@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from "react";
 import styles from "./styles.module.css";
-import {Departments, Semesters, STORAGE_KEYS} from "../../../constants/data";
+import {STORAGE_KEYS} from "../../../constants/data";
 import {useNavigate} from "react-router";
+import Login from "../../auth/login";
+import Logout from "../../auth/logout";
+import Profile from "../../auth/Profile";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Home = () => {
     const [department, setDepartment] = useState("0");
     const [semester, setSemester] = useState("0");
     const navigate = useNavigate();
+    const {isAuthenticated} = useAuth0();
 
     const Option = ({name, value}) => (
         <option className={styles.selectOption} value={value}>
@@ -36,42 +41,24 @@ const Home = () => {
             </div>
             <div className={styles.MiddleContent}>
                 <div className={styles.LoginBox}>
-                    <div className={styles.centerDiv}>
-                        <div className={styles.selectSection}>
-                            <select
-                                className={styles.selectBox}
-                                id="dropdown"
-                                onChange={(e) => setDepartment(e.target.value)}
-                                value={department}
-                            >
-                                {Departments &&
-                                    Departments.map((dep, ind) => (
-                                        <Option name={dep.name} value={ind}/>
-                                    ))}
-                            </select>
+                    {isAuthenticated &&
+                        <div>
+                            <div className={styles.showBtn} style={{color: "white"}}>
+                                <Profile/>
+                            </div>
+                            <div className={styles.showBtn}>
+                                <button className={styles.button} onClick={handleShowTimeTable}>
+                                    Show Timetable
+                                </button>
+                            </div>
+                            <div className={styles.showBtn}>
+                                <Logout/>
+                            </div>
                         </div>
-                        <div className={styles.selectSection}>
-                            <select
-                                className={styles.selectBox}
-                                id="dropdown"
-                                onChange={(e) => setSemester(e.target.value)}
-                                value={semester}
-                            >
-                                {Semesters &&
-                                    Semesters.map((sem, ind) => (
-                                        <Option value={ind} name={sem.name}/>
-                                    ))}
-                            </select>
-                        </div>
-                        <div className={styles.showBtn}>
-                            <button className={styles.button} onClick={handleShowTimeTable}>
-                                Show Timetable
-                            </button>
-                        </div>
-                    </div>
+                    }
+                    {!isAuthenticated && <Login/>}
                 </div>
             </div>
-
             <div className={styles.bottomTitle}>
                 made by Malinowski Ilya with ❤️
             </div>
