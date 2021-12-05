@@ -2,7 +2,7 @@ import * as ReactDOM from "react-dom";
 import React from "react";
 import './index.css'
 import axios from "axios";
-import {Table} from "./components/timetable";
+import App from "./components/app";
 
 const test = async () => {
     const response = await axios.get('http://localhost:8080/')
@@ -11,8 +11,9 @@ const test = async () => {
 test()
 
 ReactDOM.render(
-    <Table/>,
-    document.getElementById("root")
-)
-;
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+);
 
