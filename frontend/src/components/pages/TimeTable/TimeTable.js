@@ -5,6 +5,7 @@ import Days from "./Days";
 import DayTimeLine from "./DayTimeLine";
 import TimeTableOfDay from "./TimeTableOfDay";
 import { months,STORAGE_KEYS } from "../../../constants/data";
+
 export default function TimeTable() {
   const getChangedDate = (changedDate) => {
     const date = new Date();
@@ -44,7 +45,6 @@ export default function TimeTable() {
             <>
               <Header date={selectedDate} selectedDay={selectedDay}/>
               <Days currentDay={selectedDay} handleDayChange={handleDayChange}/>
-              <DayTimeLine/>
               <TimeTableOfDay
                   today={selectedDay}
                   tableData={"test"}

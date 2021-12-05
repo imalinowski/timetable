@@ -8,8 +8,12 @@ function TimeTableOfDay(props) {
     const { hour, time } = props;
     return (
       <div className={styles.card}>
-        <h1 className={styles.Period}>{hour.sub}</h1>
-        <h2 className={styles.Teacher}>{(hour.teacher) || (<br/>)}</h2>
+        <h1 className={styles.Period}>{ (hour.sub) || "subject" }</h1>
+        <h2 className={styles.Teacher}>{ (hour.teacher) || "teacher"}</h2>
+        <br />
+        <br />
+        <br />
+        <br />
         <br />
         <p className={styles.Time}>{periodTime[today][time]}</p>
       </div>
@@ -17,7 +21,9 @@ function TimeTableOfDay(props) {
   };
   return (
     <div className={styles.CardContainer}>
-
+        <HourCard hour={0} time={0}/>
+        <HourCard hour={0} time={0}/>
+        <HourCard hour={0} time={0}/>
     </div>
   );
 }
