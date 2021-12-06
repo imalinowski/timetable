@@ -6,12 +6,17 @@ import Login from "../../auth/login";
 import Logout from "../../auth/logout";
 import Profile from "../../auth/Profile";
 import {useAuth0} from "@auth0/auth0-react";
+import {initUser, ME} from "../../../ME";
 
 const Home = () => {
     const [department, setDepartment] = useState("0");
     const [semester, setSemester] = useState("0");
     const navigate = useNavigate();
-    const {isAuthenticated} = useAuth0();
+    const {isAuthenticated, user} = useAuth0();
+
+    if(isAuthenticated && ME.id === 0){
+        initUser(user.name, user.email)
+    }
 
     const Option = ({name, value}) => (
         <option className={styles.selectOption} value={value}>

@@ -16,10 +16,10 @@ enum class UserRole(val role: String) {
 @Serializable
 data class User(
     val id: Int = 0,
-    val email: String = "",
-    val name: String = "",
-    val role: UserRole,
-    @SerialName("group_id") val groupId: Int = -1
+    val email: String,
+    val name: String,
+    val role: UserRole = UserRole.Student,
+    @SerialName("group_id") val groupId: Int = 0
 )
 
 object UserTable : IntIdTable() {

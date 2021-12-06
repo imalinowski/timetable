@@ -104,4 +104,6 @@ const special = [
 ];
 const periodTime = [common, common, common, common, special]
 
-export {periodTime, months, days, Departments, Semesters, STORAGE_KEYS};
+const serverURL = "http://localhost:8080/"
+
+export {serverURL, periodTime, months, days, Departments, Semesters, STORAGE_KEYS};

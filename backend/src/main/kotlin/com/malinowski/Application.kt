@@ -8,6 +8,7 @@ import com.malinowski.routes.registerLocationRoutes
 import com.malinowski.routes.registerUserRoutes
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -16,6 +17,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.lang.reflect.Method
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
@@ -25,14 +27,19 @@ fun main() {
 
 fun Application.module(testing: Boolean = true) {
 
-    install(DefaultHeaders){
+    /*install(DefaultHeaders){
         header("Access-Control-Allow-Origin", "*")
+    }*/
+    install(CORS){
+        anyHost()
+        header(HttpHeaders.ContentType)
+        method(HttpMethod.Post)
     }
-
-    initDB()
     install(ContentNegotiation) {
         json()
     }
+
+    initDB()
     configureRouting()
     registerUserRoutes()
     registerLocationRoutes()

@@ -72,7 +72,7 @@ fun Route.eventRouting() {
                     event.members = SizedCollection(copy)
                     events = getEventsDB()
                 }
-                call.respondText("User added correctly", status = HttpStatusCode.Created)
+                call.respondText("User added to event correctly", status = HttpStatusCode.Created)
             } catch (e: Throwable) {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
             }

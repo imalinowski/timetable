@@ -8,6 +8,8 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.transactions.transaction
 
 val users by lazy {
@@ -26,12 +28,21 @@ fun Route.userRouting() {
                 "Missing or malformed id",
                 status = HttpStatusCode.BadRequest
             )
-            call.respondText("\n${users[id]}", status = HttpStatusCode.Accepted)
+            val user = users.find { it.id == id }
+            if (user == null)
+                call.respondText("User with id $id not found!", status = HttpStatusCode.BadRequest)
+            else
+                call.respondText(Json.encodeToString(user), status = HttpStatusCode.Accepted)
         }
         post {
             try {
                 val user = call.receive<User>()
-                users.add(user)
+
+                val exUser = users.find { it.name == user.name && it.email == user.email }
+                if (exUser != null) {
+                    call.respondText("${exUser.id}", status = HttpStatusCode.Created)
+                    return@post
+                }
                 val id = transaction {
                     UserEntity.new {
                         name = user.name
@@ -40,7 +51,8 @@ fun Route.userRouting() {
                         role = user.role
                     }.id
                 }
-                call.respondText("User stored correctly ID = $id", status = HttpStatusCode.Created)
+                users.add(user.copy(id = id.value))
+                call.respondText("$id", status = HttpStatusCode.Created)
 
             } catch (e: Throwable) {
                 call.respondText(e.message ?: "error", status = HttpStatusCode.BadRequest)
