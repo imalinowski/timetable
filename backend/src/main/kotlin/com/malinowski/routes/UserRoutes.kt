@@ -40,7 +40,8 @@ fun Route.userRouting() {
         post {
             try {
                 val user = call.receive<User>()
-
+                println("----------------------DEBUG-GET-USER----------------------")
+                println(format.encodeToString(user))
                 val exUser = users.find { it.name == user.name && it.email == user.email }
                 if (exUser != null) {
                     call.respondText("${exUser.id}", status = HttpStatusCode.Created)
@@ -66,6 +67,8 @@ fun Route.userRouting() {
                 call.respondText("$id", status = HttpStatusCode.Created)
 
             } catch (e: Throwable) {
+                println("----------------------DEBUG-GET-USER----------------------")
+                println(e.message.toString())
                 call.respondText(e.message ?: "error", status = HttpStatusCode.BadRequest)
             }
         }

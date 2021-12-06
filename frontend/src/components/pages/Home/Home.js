@@ -12,10 +12,14 @@ const Home = () => {
     const [department, setDepartment] = useState("0");
     const [semester, setSemester] = useState("0");
     const navigate = useNavigate();
+    const [state, setState] = useState("") // loading state
     const {isAuthenticated, user} = useAuth0();
 
-    if(isAuthenticated && ME.id === 0){
+    if (isAuthenticated && ME.id === 0) {
         initUser(user.name, user.email)
+            .then((value) => {
+                setState(value)
+            })
     }
 
     const Option = ({name, value}) => (
@@ -23,6 +27,7 @@ const Home = () => {
             {name}
         </option>
     );
+
     const handleShowTimeTable = () => {
         localStorage.setItem(STORAGE_KEYS.SEMESTER, semester);
         localStorage.setItem(STORAGE_KEYS.DEPARTMENT, department);
@@ -48,7 +53,7 @@ const Home = () => {
                 <div className={styles.LoginBox}>
                     {isAuthenticated &&
                         <div>
-                            <div className={styles.showBtn} style={{color: "white"}}>
+                            <div className={styles.itemMargin} style={{color: "white"}}>
                                 <Profile/>
                             </div>
                             <div className={styles.showBtn}>
