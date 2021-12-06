@@ -1,7 +1,9 @@
 package com.malinowski.routes
 
+import com.malinowski.format
 import com.malinowski.models.User
 import com.malinowski.models.UserEntity
+import com.malinowski.models.UserRole
 import com.malinowski.models.toUsers
 import io.ktor.application.*
 import io.ktor.http.*
@@ -9,7 +11,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.transactions.transaction
 
 val users by lazy {
@@ -29,10 +30,12 @@ fun Route.userRouting() {
                 status = HttpStatusCode.BadRequest
             )
             val user = users.find { it.id == id }
+            println("----------------------DEBUG-GET-USER----------------------")
+            println(format.encodeToString(user))
             if (user == null)
                 call.respondText("User with id $id not found!", status = HttpStatusCode.BadRequest)
             else
-                call.respondText(Json.encodeToString(user), status = HttpStatusCode.Accepted)
+                call.respondText(format.encodeToString(user), status = HttpStatusCode.Accepted)
         }
         post {
             try {
@@ -51,7 +54,15 @@ fun Route.userRouting() {
                         role = user.role
                     }.id
                 }
-                users.add(user.copy(id = id.value))
+                users.add(
+                    User(
+                        id = id.value,
+                        name = user.name,
+                        email = user.email,
+                        groupId = 0,
+                        role = UserRole.Student
+                    )
+                )
                 call.respondText("$id", status = HttpStatusCode.Created)
 
             } catch (e: Throwable) {

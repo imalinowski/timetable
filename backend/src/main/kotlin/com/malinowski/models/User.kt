@@ -8,6 +8,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SizedIterable
 
+@Serializable
 enum class UserRole(val role: String) {
     Teacher("teacher"),
     Student("student")
@@ -18,8 +19,8 @@ data class User(
     val id: Int = 0,
     val email: String,
     val name: String,
-    val role: UserRole = UserRole.Student,
-    @SerialName("group_id") val groupId: Int = 0
+    @SerialName("group_id") val groupId: Int = -1,
+    val role: UserRole = UserRole.Student
 )
 
 object UserTable : IntIdTable() {
