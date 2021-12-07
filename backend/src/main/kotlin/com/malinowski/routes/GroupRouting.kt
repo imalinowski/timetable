@@ -1,5 +1,6 @@
 package com.malinowski.routes
 
+import com.malinowski.format
 import com.malinowski.models.Group
 import com.malinowski.models.GroupEntity
 import com.malinowski.models.toGroups
@@ -8,6 +9,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.serialization.encodeToString
 import org.jetbrains.exposed.sql.transactions.transaction
 
 val groups by lazy {
@@ -19,7 +21,7 @@ val groups by lazy {
 fun Route.groupRouting() {
     route("/group") {
         get {
-            call.respondText(groups.joinToString("\n"), status = HttpStatusCode.Accepted)
+            call.respondText(format.encodeToString(groups), status = HttpStatusCode.Accepted)
         }
         get("{id}") {
             val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(
@@ -31,7 +33,6 @@ fun Route.groupRouting() {
             else
                 call.respondText("\n${groups[id]}", status = HttpStatusCode.Accepted)
         }
-
         post {
             try {
                 val group = call.receive<Group>()
@@ -46,6 +47,7 @@ fun Route.groupRouting() {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
             }
         }
+
     }
 }
 

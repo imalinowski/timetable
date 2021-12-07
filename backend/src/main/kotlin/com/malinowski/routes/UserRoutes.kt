@@ -1,10 +1,7 @@
 package com.malinowski.routes
 
 import com.malinowski.format
-import com.malinowski.models.User
-import com.malinowski.models.UserEntity
-import com.malinowski.models.UserRole
-import com.malinowski.models.toUsers
+import com.malinowski.models.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -13,10 +10,9 @@ import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import org.jetbrains.exposed.sql.transactions.transaction
 
-val users by lazy {
-    transaction {
-        UserEntity.all().toUsers().toMutableList()
-    }
+var users = getUsersDB()
+fun getUsersDB() = transaction {
+    UserEntity.all().toUsers().toMutableList()
 }
 
 fun Route.userRouting() {
@@ -37,7 +33,27 @@ fun Route.userRouting() {
             else
                 call.respondText(format.encodeToString(user), status = HttpStatusCode.Accepted)
         }
-        post {
+        put("{userId}/toGroup/{groupId}") {
+            val userId = call.parameters["userId"]?.toInt() ?: return@put call.respondText(
+                "Missing or malformed userId",
+                status = HttpStatusCode.BadRequest
+            )
+            val groupId = call.parameters["groupId"]?.toInt() ?: return@put call.respondText(
+                "Missing or malformed groupId",
+                status = HttpStatusCode.BadRequest
+            )
+            try {
+                transaction {
+                    GroupEntity[groupId]
+                    UserEntity[userId].groupId = groupId
+                }
+                users = getUsersDB()
+                call.respond(HttpStatusCode.Accepted)
+            } catch (e: Throwable) {
+                call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
+            }
+        }
+        post { // return id of a new user or existing one
             try {
                 val user = call.receive<User>()
                 println("----------------------DEBUG-GET-USER----------------------")

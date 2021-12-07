@@ -8,7 +8,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/user/11
+GET http://localhost:8080/user/13
+
+###
+PUT http://localhost:8080/user/13/toGroup/2
 
 ###
 POST http://localhost:8080/group
@@ -28,11 +31,11 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "name": "birthday",
+  "name": "data bases",
   "location": {
     "id" : 0,
-    "name": "test_location",
-    "coordinates" : "test coordinates"
+    "name": "2009",
+    "coordinates" : "9988129, 981923"
   },
   "time": 930
 }

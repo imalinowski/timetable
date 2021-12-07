@@ -9,10 +9,10 @@ const Profile = () => {
     return (isAuthenticated &&
         <div>
             <div>
-                <div>{"email " + ME.email}</div>
-                <div>{"name " + ME.name}</div>
-                <div>{"group " + ME.group_id}</div>
-                <div>{ME.role}</div>
+                <div>{"email : " + ME.email}</div>
+                <div>{"name : " + ME.name}</div>
+                <div>{"group : " + (ME.group_id || "не задана") }</div>
+                <div>{"role : " + ME.role}</div>
             </div>
         </div>
     );

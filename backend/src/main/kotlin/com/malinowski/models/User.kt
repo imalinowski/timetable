@@ -19,7 +19,7 @@ data class User(
     val id: Int = 0,
     val email: String,
     val name: String,
-    @SerialName("group_id") val groupId: Int = -1,
+    @SerialName("group_id") val groupId: Int = 0,
     val role: UserRole = UserRole.Student
 )
 
