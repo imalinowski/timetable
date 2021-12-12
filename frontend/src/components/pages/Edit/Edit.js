@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import styles from "./styles.module.css";
+import styles from "../create/styles.module.css";
 import {useNavigate} from "react-router";
 import Profile from "../../auth/Profile";
 import {groups, ME, roles} from "../../../ME";

@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import {useNavigate} from "react-router";
 import Login from "../../auth/login";
 import {useAuth0} from "@auth0/auth0-react";
-import {initUser, ME} from "../../../ME";
+import {initUser} from "../../../ME";
 import Profile from "../../auth/Profile";
 import Logout from "../../auth/logout";
 
@@ -12,7 +12,7 @@ const Home = () => {
     const [state, setState] = useState("not loaded") // loading state
     const {isAuthenticated, user} = useAuth0();
 
-    if (isAuthenticated && ME.id === 0) {
+    if (isAuthenticated && state === "not loaded") {
         initUser(user.name, user.email)
             .then((value) => {
                 setState(value)

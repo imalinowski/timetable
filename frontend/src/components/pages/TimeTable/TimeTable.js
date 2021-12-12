@@ -1,12 +1,16 @@
 import styles from "./styles.module.css";
-import {useState} from "react";
+import React, {useState} from "react";
 import Header from "./Header";
 import Days from "./Days";
 import TimeTableOfDay from "./TimeTableOfDay";
 import {months} from "../../../constants/data";
-import {timeTable} from "../../../ME";
+import {ME, timeTable} from "../../../ME";
+import {useNavigate} from "react-router";
 
 export default function TimeTable() {
+
+    const navigate = useNavigate();
+
     const getChangedDate = (changedDate) => {
         const date = new Date();
         date.setDate(
@@ -43,6 +47,11 @@ export default function TimeTable() {
                             today={selectedDay}
                             tableData={timeTable.filter(e => e.week_day === selectedDay)}
                         />
+                        {ME.role === "Teacher" && (<div className={styles.showBtn}>
+                            <button className={styles.button} onClick={() => navigate("/create")}>
+                                Create Event
+                            </button>
+                        </div>)}
                     </>
                 )}
             </div>
