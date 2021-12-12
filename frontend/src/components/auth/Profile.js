@@ -11,7 +11,7 @@ const Profile = () => {
             <div>
                 <div>{"email : " + ME.email}</div>
                 <div>{"name : " + ME.name}</div>
-                <div>{"group : " + (ME.group || "не задана") }</div>
+                <div>{"group : " + (ME.group || "не задана")}</div>
                 <div>{"role : " + ME.role}</div>
             </div>
         </div>

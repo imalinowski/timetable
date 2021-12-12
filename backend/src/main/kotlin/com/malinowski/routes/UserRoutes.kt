@@ -58,6 +58,8 @@ fun Route.userRouting() {
                 "Missing or malformed groupId",
                 status = HttpStatusCode.BadRequest
             )
+            println("----------------------DEBUG-GROUP-USER----------------------")
+            println("$userId to $groupId")
             try {
                 transaction {
                     GroupEntity[groupId]

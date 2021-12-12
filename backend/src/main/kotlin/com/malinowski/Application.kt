@@ -34,6 +34,7 @@ fun Application.module(testing: Boolean = true) {
         anyHost()
         header(HttpHeaders.ContentType)
         method(HttpMethod.Post)
+        method(HttpMethod.Put)
     }
     install(ContentNegotiation) {
         json()

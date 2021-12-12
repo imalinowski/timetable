@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styles from "./styles.module.css";
-import {STORAGE_KEYS} from "../../../constants/data";
 import {useNavigate} from "react-router";
 import Login from "../../auth/login";
-import Logout from "../../auth/logout";
-import Profile from "../../auth/Profile";
 import {useAuth0} from "@auth0/auth0-react";
 import {initUser, ME} from "../../../ME";
+import Profile from "../../auth/Profile";
+import Logout from "../../auth/logout";
 
 const Home = () => {
-    const [department, setDepartment] = useState("0");
-    const [semester, setSemester] = useState("0");
     const navigate = useNavigate();
-    const [state, setState] = useState("") // loading state
+    const [state, setState] = useState("not loaded") // loading state
     const {isAuthenticated, user} = useAuth0();
 
     if (isAuthenticated && ME.id === 0) {
@@ -22,27 +19,14 @@ const Home = () => {
             })
     }
 
-    const Option = ({name, value}) => (
-        <option className={styles.selectOption} value={value}>
-            {name}
-        </option>
-    );
-
     const handleShowTimeTable = () => {
-        localStorage.setItem(STORAGE_KEYS.SEMESTER, semester);
-        localStorage.setItem(STORAGE_KEYS.DEPARTMENT, department);
         navigate("/timetable");
     };
 
-    useEffect(() => {
-        if (
-            localStorage.getItem(STORAGE_KEYS.DEPARTMENT) !== "undefined" &&
-            localStorage.getItem(STORAGE_KEYS.SEMESTER) !== "undefined"
-        ) {
-            setDepartment(localStorage.getItem(STORAGE_KEYS.DEPARTMENT));
-            setSemester(localStorage.getItem(STORAGE_KEYS.SEMESTER));
-        }
-    }, []);
+    const handleEdit = () => {
+        navigate("/edit");
+    };
+
     return (
         <div className={styles.contentWrapper}>
             <div className={styles.titleSection}>
@@ -53,8 +37,14 @@ const Home = () => {
                 <div className={styles.LoginBox}>
                     {isAuthenticated &&
                         <div>
+                            <div style={state === "loaded" ? {color: "green"} : {color: "red"}}> {state} </div>
                             <div className={styles.itemMargin} style={{color: "white"}}>
                                 <Profile/>
+                            </div>
+                            <div style={{textAlign: "end"}}>
+                                <button className={styles.button} onClick={handleEdit}>
+                                    Edit
+                                </button>
                             </div>
                             <div className={styles.showBtn}>
                                 <button className={styles.button} onClick={handleShowTimeTable}>

@@ -16,6 +16,16 @@ let timeTable = [{
     week_day: 0
 }]
 
+let groups = [{
+    id: 0,
+    name: ""
+}]
+
+let roles = [
+    {id: 0, name: "Teacher"},
+    {id: 1, name: "Student"}
+]
+
 const initUser = async (name, email) => {
     console.log("pre init user > " + name + " " + email)
     const body = {
@@ -26,12 +36,14 @@ const initUser = async (name, email) => {
     console.log("id > " + id.data)
     const user = await axios.get(serverURL+"user/" + id.data)
     ME = user.data
-    const group = (await axios.get(serverURL + "group")).data
-    ME.group = (group.find( e => e.id === ME.group_id) || { name: ""} ).name
+    groups = (await axios.get(serverURL + "group")).data
+    console.log(groups)
+    ME.group = (groups.find(e => e.id === ME.group_id) || { name: ""} ).name
     console.log(ME)
     timeTable = (await axios.get(serverURL + "user/" + id.data + "/events")).data
+    console.log("events")
     console.log(timeTable)
     return "loaded"
 }
 
-export {timeTable, ME, initUser}
+export {roles, groups, timeTable, ME, initUser}
