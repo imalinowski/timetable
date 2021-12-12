@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.SizedIterable
 
 @Serializable
 data class Event(
-    val id: Int,
+    val id: Int = 0,
     val name: String,
     val location: Location,
     val members: List<User> = listOf(),

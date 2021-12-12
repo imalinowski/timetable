@@ -1,42 +1,42 @@
 const Departments = [
     {
-        name:"BSc Computer science"
+        name: "BSc Computer science"
     },
     {
-        name:"BSc Microbiology"
+        name: "BSc Microbiology"
     },
     {
-        name:"BSc Biotechnology"
+        name: "BSc Biotechnology"
     },
     {
-        name:"BSc Biochemistry"
+        name: "BSc Biochemistry"
     },
     {
-        name:"BA Economics"
+        name: "BA Economics"
     },
     {
-        name:"BA English"
+        name: "BA English"
     },
     {
-        name:"BA West Asian Studies"
+        name: "BA West Asian Studies"
     },
     {
-        name:"B.Com Computer Application"
+        name: "B.Com Computer Application"
     },
     {
-        name:"B.Com Co-op"
+        name: "B.Com Co-op"
     },
     {
-        name:"BBA"
+        name: "BBA"
     },
     {
-        name:"BVoc Logistics"
+        name: "BVoc Logistics"
     },
     {
-        name:"BVoc Professional Accounting and Taxation"
+        name: "BVoc Professional Accounting and Taxation"
     },
     {
-        name:"BSc Maths and Physics"
+        name: "BSc Maths and Physics"
     }
 ]
 
@@ -61,11 +61,6 @@ const Semesters = [
     },
 ];
 
-const STORAGE_KEYS = {
-    SEMESTER:'user-sem',
-    DEPARTMENT:'user-dept'
-}
-
 const months = [
     "JAN",
     "FEB",
@@ -81,11 +76,11 @@ const months = [
     "DEC",
 ];
 const days = [
-    { short: "mon", full: "Monday" },
-    { short: "tue", full: "Tuesday" },
-    { short: "wed", full: "Wednesday" },
-    { short: "thu", full: "Thursday" },
-    { short: "fri", full: "Friday" },
+    {short: "mon", full: "Monday"},
+    {short: "tue", full: "Tuesday"},
+    {short: "wed", full: "Wednesday"},
+    {short: "thu", full: "Thursday"},
+    {short: "fri", full: "Friday"},
 ];
 
 const common = [
@@ -100,4 +95,4 @@ const periodTime = [common, common, common, common, common]
 
 const serverURL = "http://localhost:8080/"
 
-export {serverURL, periodTime, months, days, Departments, Semesters, STORAGE_KEYS};
+export {serverURL, periodTime, months, days, Departments, Semesters, common};

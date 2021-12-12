@@ -13,7 +13,8 @@ let ME = {
 
 let timeTable = [{
     name: "",
-    week_day: 0
+    week_day: 0,
+    time: 0
 }]
 
 let groups = [{

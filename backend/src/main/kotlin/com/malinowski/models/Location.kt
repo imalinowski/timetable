@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.SizedIterable
 
 @Serializable
 data class Location(
-    val id: Int = 0,
+    val id: Int = 0 ,
     val name: String,
     val coordinates: String,
 )

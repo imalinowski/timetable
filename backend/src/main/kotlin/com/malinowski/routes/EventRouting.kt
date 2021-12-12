@@ -1,11 +1,14 @@
 package com.malinowski.routes
 
+import com.malinowski.format
 import com.malinowski.models.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.serialization.encodeToString
+import org.jetbrains.exposed.dao.exceptions.EntityNotFoundException
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -17,7 +20,7 @@ fun getEventsDB() = transaction {
 fun Route.eventRouting() {
     route("/event") {
         get {
-            call.respondText(events.joinToString("\n"), status = HttpStatusCode.Accepted)
+            call.respondText(format.encodeToString(events), status = HttpStatusCode.Accepted)
         }
         get("{id}") {
             val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(
@@ -33,12 +36,17 @@ fun Route.eventRouting() {
             try {
                 val event = call.receive<Event>()
                 val id = transaction {
-                    EventEntity.new {
-                        name = event.name
-                        locationId = LocationEntity.new {
+                    val location = try { // find or create new one
+                        LocationEntity[event.location.id]
+                    } catch (e: EntityNotFoundException) {
+                        LocationEntity.new {
                             name = event.location.name
                             coordinates = event.location.coordinates
                         }
+                    }
+                    EventEntity.new {
+                        name = event.name
+                        locationId = location
                         time = event.time
                         weekDay = event.week_day
                     }.id

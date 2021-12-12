@@ -4,7 +4,7 @@ import Header from "./Header";
 import Days from "./Days";
 import TimeTableOfDay from "./TimeTableOfDay";
 import {months} from "../../../constants/data";
-import {ME, timeTable} from "../../../ME";
+import {timeTable} from "../../../ME";
 import {useNavigate} from "react-router";
 
 export default function TimeTable() {
@@ -47,11 +47,11 @@ export default function TimeTable() {
                             today={selectedDay}
                             tableData={timeTable.filter(e => e.week_day === selectedDay)}
                         />
-                        {ME.role === "Teacher" && (<div className={styles.showBtn}>
-                            <button className={styles.button} onClick={() => navigate("/create")}>
-                                Create Event
+                        <div className={styles.showBtn}>
+                            <button className={styles.button} onClick={() => navigate("/events")}>
+                                All Events
                             </button>
-                        </div>)}
+                        </div>
                     </>
                 )}
             </div>

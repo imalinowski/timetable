@@ -1,11 +1,13 @@
 package com.malinowski.routes
 
+import com.malinowski.format
 import com.malinowski.models.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.serialization.encodeToString
 import org.jetbrains.exposed.sql.transactions.transaction
 
 val locations by lazy {
@@ -17,7 +19,7 @@ val locations by lazy {
 fun Route.locationRouting() {
     route("/location") {
         get {
-            call.respondText(locations.joinToString("\n"), status = HttpStatusCode.Accepted)
+            call.respondText(format.encodeToString(locations), status = HttpStatusCode.Accepted)
         }
         get("{id}") {
             val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(

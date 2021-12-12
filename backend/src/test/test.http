@@ -34,10 +34,11 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "name": "english",
+  "name": "english 2",
   "location": {
-    "name": "online",
-    "coordinates" : "0, 0"
+    "id": 1,
+    "name": "English 2",
+    "coordinates": "0"
   },
   "time": 1,
   "week_day": 0
