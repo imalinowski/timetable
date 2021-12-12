@@ -4,12 +4,22 @@ import Header from "./Header";
 import Days from "./Days";
 import TimeTableOfDay from "./TimeTableOfDay";
 import {months} from "../../../constants/data";
-import {timeTable} from "../../../ME";
+import {initUser, ME, timeTable} from "../../../ME";
 import {useNavigate} from "react-router";
+import {useAuth0} from "@auth0/auth0-react";
 
 export default function TimeTable() {
 
     const navigate = useNavigate();
+    const {isAuthenticated, user} = useAuth0();
+    const [state, setState] = useState(ME.id === -1 ? "not loaded": "loaded") // loading state
+
+    if (isAuthenticated && ME.id === -1) {
+        initUser(user.name, user.email)
+            .then((value) => {
+                setState(value)
+            })
+    }
 
     const getChangedDate = (changedDate) => {
         const date = new Date();
@@ -35,6 +45,9 @@ export default function TimeTable() {
         setSelectedDate(getChangedDate(day));
         setSelectedDay(day);
     };
+
+    if(state === "not loaded")
+        return <div></div>
 
     return (
         <>

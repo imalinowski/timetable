@@ -8,7 +8,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
-import org.jetbrains.exposed.dao.exceptions.EntityNotFoundException
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -36,10 +35,8 @@ fun Route.eventRouting() {
             try {
                 val event = call.receive<Event>()
                 val id = transaction {
-                    val location = try { // find or create new one
-                        LocationEntity[event.location.id]
-                    } catch (e: EntityNotFoundException) {
-                        LocationEntity.new {
+                    val location = LocationEntity.find { LocationTable.id eq event.location.id }.let {
+                        it.firstOrNull() ?: LocationEntity.new {
                             name = event.location.name
                             coordinates = event.location.coordinates
                         }

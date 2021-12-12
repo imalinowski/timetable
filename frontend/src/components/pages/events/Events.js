@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styles from "../Edit/styles.module.css";
 import {periodTime, serverURL} from "../../../constants/data";
 import axios from "axios";
-import {ME} from "../../../ME";
+import {initTimeTable, ME} from "../../../ME";
 import {useNavigate} from "react-router";
 
 const Events = () => {
@@ -16,16 +16,33 @@ const Events = () => {
     }
     if (!events) loadEvents().then(r => setEvents(r))
 
+    const enroll = async (event_id) => {
+        try {
+            const result = await axios.post(serverURL + "event/" + event_id + "/adduser/" + ME.id)
+            window.alert(result.data)
+            loadEvents().then(r => setEvents(r)) // update events
+            await initTimeTable()
+        } catch (err) {
+            window.alert(err.response.data)
+        }
+    }
+
     const Event = (props) => {
         const {event} = props;
+        const part = event.members.find(m => m.id === ME.id)
         return (
             <div className={styles.card}>
                 <h1 className={styles.Period}>{(event.name) || "subject"}</h1>
-                <br/><br/><br/><br/><br/>
                 <p className={styles.Time}>{periodTime[0][event.time]}</p>
+                {!part && (<button className={styles.button} onClick={() => enroll(event.id)}>
+                    Enroll
+                </button>)}
             </div>
         );
     };
+
+    if(ME.id === -1)
+        return <div> You should auth </div>
 
     return (
         <div className={styles.contentWrapper}>
