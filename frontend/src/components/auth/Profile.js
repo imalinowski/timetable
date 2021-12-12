@@ -3,7 +3,7 @@ import {useAuth0} from "@auth0/auth0-react";
 import {ME} from "../../ME";
 
 const Profile = () => {
-    const {isAuthenticated, isLoading, user} = useAuth0();
+    const {isAuthenticated, isLoading} = useAuth0();
     if (isLoading)
         return (<div>Loading...</div>)
     return (isAuthenticated &&
@@ -11,7 +11,7 @@ const Profile = () => {
             <div>
                 <div>{"email : " + ME.email}</div>
                 <div>{"name : " + ME.name}</div>
-                <div>{"group : " + (ME.group_id || "не задана") }</div>
+                <div>{"group : " + (ME.group || "не задана") }</div>
                 <div>{"role : " + ME.role}</div>
             </div>
         </div>

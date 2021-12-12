@@ -6,7 +6,9 @@ let ME = {
     email: "email",
     name: "name",
     role: "role",
-    group_id: 0
+    group: "",
+    group_id: -1
+
 }
 
 const initUser = async (name, email) => {
@@ -15,10 +17,12 @@ const initUser = async (name, email) => {
         name: name,
         email: email
     }
-    const response = await axios.post(serverURL+"user", body)
-    console.log("id > " + response.data)
-    const user = await axios.get(serverURL+"user/" + response.data)
+    const id = await axios.post(serverURL+"user", body)
+    console.log("id > " + id.data)
+    const user = await axios.get(serverURL+"user/" + id.data)
     ME = user.data
+    const group = (await axios.get(serverURL + "group")).data
+    ME.group = group.find( e => e.id === ME.group_id).name
     console.log(ME)
     return "loaded"
 }
