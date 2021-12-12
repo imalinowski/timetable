@@ -9,6 +9,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.lang.IllegalStateException
 
 var users = getUsersDB()
 fun getUsersDB() = transaction {
@@ -32,6 +33,21 @@ fun Route.userRouting() {
                 call.respondText("User with id $id not found!", status = HttpStatusCode.BadRequest)
             else
                 call.respondText(format.encodeToString(user), status = HttpStatusCode.Accepted)
+        }
+        get("{id}/events"){
+            val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(
+                "Missing or malformed id",
+                status = HttpStatusCode.BadRequest
+            )
+            try {
+                val user = users.find { it.id == id} ?: throw IllegalStateException("Users with id $id not found")
+                val events = events.filter { event ->
+                    event.members.contains(user)
+                }
+                call.respondText(format.encodeToString(events), status = HttpStatusCode.Accepted)
+            }catch (e: Throwable) {
+                call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
+            }
         }
         put("{userId}/toGroup/{groupId}") {
             val userId = call.parameters["userId"]?.toInt() ?: return@put call.respondText(

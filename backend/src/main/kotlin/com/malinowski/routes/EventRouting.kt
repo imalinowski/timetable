@@ -40,7 +40,7 @@ fun Route.eventRouting() {
                             coordinates = event.location.coordinates
                         }
                         time = event.time
-                        // members = SizedCollection(event.members)
+                        weekDay = event.week_day
                     }.id
                 }
                 events = getEventsDB()

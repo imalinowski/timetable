@@ -14,7 +14,7 @@ export default function Days(props) {
   return (
     <div className={styles.daysSection}>
       {days.map((day, ind) => (
-        <Day name={day.short} day={ind} currentDay={currentDay} />
+        <Day key = {day.full} name={day.short} day={ind} currentDay={currentDay} />
       ))}
     </div>
   );

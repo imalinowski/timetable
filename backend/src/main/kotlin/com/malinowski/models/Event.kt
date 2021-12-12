@@ -14,12 +14,14 @@ data class Event(
     val location: Location,
     val members: List<User> = listOf(),
     val time: Long,
+    val week_day: Int,
 )
 
 object EventTable : IntIdTable() {
     val name = varchar("name", 100)
     val locationId = reference("location_id", LocationTable) // many to one reference
-    val time = long("time_date")
+    val time = long("time")
+    val weekDay = integer("week_day")
 }
 
 class EventEntity(id: EntityID<Int>) : IntEntity(id) {
@@ -28,6 +30,7 @@ class EventEntity(id: EntityID<Int>) : IntEntity(id) {
     var name by EventTable.name
     var locationId by LocationEntity referencedOn EventTable.locationId
     var time by EventTable.time
+    var weekDay by EventTable.weekDay
     var members by UserEntity via UserEventTable
 }
 
@@ -44,7 +47,8 @@ fun SizedIterable<EventEntity>.toEvents(): List<Event> {
                     coordinates = it.locationId.coordinates
                 ),
                 time = it.time,
-                members = it.members.toUsers()
+                members = it.members.toUsers(),
+                week_day = it.weekDay
             )
         )
     }

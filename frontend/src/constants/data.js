@@ -89,20 +89,14 @@ const days = [
 ];
 
 const common = [
-    "9:00AM - 9:45AM",
-    "9:50AM - 10:30AM",
-    "10:50AM - 11:30AM",
-    "11:40AM - 12:30PM",
-    "12:30PM - 1:15PM",
+    "9:30AM - 11:05AM",
+    "11:15AM - 12:50AM",
+    "13:40AM - 15:15AM",
+    "15:25AM - 17:00PM",
+    "17:10PM - 18:40PM",
 ];
-const special = [
-    "8:45AM - 9:25AM",
-    "9:30AM - 10:10AM",
-    "10:15AM - 10:55AM",
-    "11:00AM - 11:40AM",
-    "11:45AM - 12:15PM"
-];
-const periodTime = [common, common, common, common, special]
+
+const periodTime = [common, common, common, common, common]
 
 const serverURL = "http://localhost:8080/"
 

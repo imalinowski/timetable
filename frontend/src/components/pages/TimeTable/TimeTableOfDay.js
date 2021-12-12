@@ -5,25 +5,20 @@ import {periodTime} from "../../../constants/data";
 function TimeTableOfDay(props) {
   const { today, tableData } = props;
   const HourCard = (props) => {
-    const { hour, time } = props;
+    const { event } = props;
     return (
       <div className={styles.card}>
-        <h1 className={styles.Period}>{ (hour.sub) || "subject" }</h1>
-        <h2 className={styles.Teacher}>{ (hour.teacher) || "teacher"}</h2>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <p className={styles.Time}>{periodTime[today][time]}</p>
+        <h1 className={styles.Period}>{ (event.name) || "subject" }</h1>
+        <br /><br /><br /><br /><br />
+        <p className={styles.Time}>{periodTime[today][event.time]}</p>
       </div>
     );
   };
   return (
     <div className={styles.CardContainer}>
-        <HourCard hour={0} time={0}/>
-        <HourCard hour={0} time={0}/>
-        <HourCard hour={0} time={0}/>
+        {tableData && tableData.map( event => (
+            <HourCard key = {event.name + "" + event.time} event = {event} />
+        ))}
     </div>
   );
 }
