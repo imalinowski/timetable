@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import styles from "../Edit/styles.module.css";
-import {periodTime, serverURL} from "../../../constants/data";
+import {days, periodTime, serverURL} from "../../../constants/data";
 import axios from "axios";
 import {initTimeTable, ME} from "../../../ME";
 import {useNavigate} from "react-router";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Events = () => {
     const navigate = useNavigate();
     let [events, setEvents] = useState(undefined)
+    const {isAuthenticated} = useAuth0();
 
     const loadEvents = async () => {
         const result = await axios.get(serverURL + "event")
@@ -34,6 +36,7 @@ const Events = () => {
             <div className={styles.card}>
                 <h1 className={styles.Period}>{(event.name) || "subject"}</h1>
                 <p className={styles.Time}>{periodTime[0][event.time]}</p>
+                <p className={styles.Time}>{days[event.week_day].short}</p>
                 {!part && (<button className={styles.button} onClick={() => enroll(event.id)}>
                     Enroll
                 </button>)}
@@ -41,8 +44,10 @@ const Events = () => {
         );
     };
 
-    if(ME.id === -1)
-        return <div> You should auth </div>
+    React.useEffect(() => {
+        if (!isAuthenticated)
+            navigate("/")
+    });
 
     return (
         <div className={styles.contentWrapper}>

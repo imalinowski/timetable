@@ -4,6 +4,7 @@ import {useNavigate} from "react-router";
 import {common, days, serverURL} from "../../../constants/data";
 import axios from "axios";
 import {ME, roles} from "../../../ME";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Create = () => {
     const navigate = useNavigate();
@@ -12,12 +13,18 @@ const Create = () => {
     const [week_day, setWeekDay] = useState(0)
     let [locations, setLocations] = useState(undefined)
     let [location, setLocation] = useState(undefined)
+    const {isAuthenticated} = useAuth0();
 
     const loadLocations = async () => {
         const result = await axios.get(serverURL + "location")
         console.log(result.data)
         return result.data
     }
+    React.useEffect(() => {
+        if (!isAuthenticated)
+            navigate("/")
+    });
+
     if (ME.role !== roles[0].name) // not teacher
         return <div> Only Teachers have such type of access  </div>
 

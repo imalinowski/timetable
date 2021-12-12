@@ -14,13 +14,6 @@ export default function TimeTable() {
     const {isAuthenticated, user} = useAuth0();
     const [state, setState] = useState(ME.id === -1 ? "not loaded": "loaded") // loading state
 
-    if (isAuthenticated && ME.id === -1) {
-        initUser(user.name, user.email)
-            .then((value) => {
-                setState(value)
-            })
-    }
-
     const getChangedDate = (changedDate) => {
         const date = new Date();
         date.setDate(
@@ -41,13 +34,26 @@ export default function TimeTable() {
     const [selectedDate, setSelectedDate] = useState(getChangedDate(day));
     const [selectedDay, setSelectedDay] = useState(day);
 
+    if (isAuthenticated && ME.id === -1) {
+        initUser(user.name, user.email)
+            .then((value) => {
+                setState(value)
+            })
+    }
+
+    React.useEffect(() => {
+        if (!isAuthenticated)
+            navigate("/")
+    });
+
+    if(state !== "loaded")
+        return <div>{state}</div>
+
+
     const handleDayChange = (day) => {
         setSelectedDate(getChangedDate(day));
         setSelectedDay(day);
     };
-
-    if(state === "not loaded")
-        return <div></div>
 
     return (
         <>

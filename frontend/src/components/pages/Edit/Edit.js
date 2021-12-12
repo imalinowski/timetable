@@ -5,11 +5,13 @@ import Profile from "../../auth/Profile";
 import {groups, ME, roles} from "../../../ME";
 import axios from "axios";
 import {serverURL} from "../../../constants/data";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Edit = () => {
     const navigate = useNavigate();
     const [group, setGroup] = useState(groups.indexOf(groups.find(e => e.id === ME.group_id)) || 0)
     const [role, setRole] = useState(ME.role === "Teacher" ? 0 : 1)
+    const {isAuthenticated} = useAuth0();
 
     const Option = ({name, value}) => (
         <option className={styles.selectOption} value={value}>
@@ -25,6 +27,11 @@ const Edit = () => {
         const result = await axios.put(serverURL + "user/" + ME.id + "/toGroup/" + ME.group_id)
         console.log(result.statusText)
     }
+
+    React.useEffect(() => {
+        if (!isAuthenticated)
+            navigate("/")
+    });
 
     return (
         <div className={styles.contentWrapper}>

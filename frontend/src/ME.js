@@ -56,7 +56,8 @@ const initUser = async (name, email) => {
         console.log(timeTable)
         return "loaded"
     } catch (err) {
-        console.log(err.response.data)
+        console.log(err)
+        window.alert(err)
     }
 }
 

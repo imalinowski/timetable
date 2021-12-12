@@ -44,6 +44,8 @@ fun Route.userRouting() {
                 val events = events.filter { event ->
                     event.members.contains(user)
                 }
+                println("----------------------DEBUG-USER-EVENTS----------------------")
+                println("$id > ${events.joinToString()}")
                 call.respondText(format.encodeToString(events), status = HttpStatusCode.Accepted)
             }catch (e: Throwable) {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
@@ -66,6 +68,7 @@ fun Route.userRouting() {
                     UserEntity[userId].groupId = groupId
                 }
                 users = getUsersDB()
+                events = getEventsDB()
                 call.respond(HttpStatusCode.Accepted)
             } catch (e: Throwable) {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
