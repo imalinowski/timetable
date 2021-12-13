@@ -65,16 +65,31 @@ fun Route.eventRouting() {
                     status = HttpStatusCode.BadRequest
                 )
                 transaction {
-                    val event = EventEntity.find { EventTable.id eq eventId }.let {
+                    val eventEnt = EventEntity.find { EventTable.id eq eventId }.let {
                         if (it.empty()) throw IllegalStateException("Event with id = $eventId not exist!")
                         it.first()
                     }
-                    val user = UserEntity.find { UserTable.id eq userId }.let {
+                    val userEnt = UserEntity.find { UserTable.id eq userId }.let {
                         if (it.empty()) throw IllegalStateException("User with id = $userId not exist!")
                         it.first()
                     }
-                    val copy = event.members.toMutableList().apply { add(user) }
-                    event.members = SizedCollection(copy)
+                    val user = User(
+                        id = userEnt.id.value,
+                        email = userEnt.email,
+                        name = userEnt.name,
+                        role = userEnt.role,
+                        groupId = userEnt.groupId,
+                    )
+
+                    events.filter { event -> event.members.contains(user) }
+                        .filter { event ->
+                            event.time == eventEnt.time && event.week_day == eventEnt.weekDay
+                        }.also {
+                            if(it.isNotEmpty()) throw java.lang.IllegalStateException("User is busy. ${it.first().name} at that time")
+                        }
+
+                    val copy = eventEnt.members.toMutableList().apply { add(userEnt) }
+                    eventEnt.members = SizedCollection(copy)
                     events = getEventsDB()
                 }
                 call.respondText("User added to event correctly", status = HttpStatusCode.Created)

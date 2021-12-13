@@ -21,8 +21,8 @@ POST http://localhost:8080/group
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "some group"
+  "id": 0,
+  "name": "19б13"
 }
 
 ###
@@ -62,7 +62,6 @@ POST http://localhost:8080/location
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "PM-PU",
-  "coordinates": "2"
+  "name": "VAS ISL 1",
+  "coordinates": "11 11"
 }

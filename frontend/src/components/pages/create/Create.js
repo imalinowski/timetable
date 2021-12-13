@@ -62,6 +62,7 @@ const Create = () => {
         </option>
     );
 
+    //console.log("OK")
     return (
         <div className={styles.contentWrapper}>
             <div className={styles.titleSection}>
