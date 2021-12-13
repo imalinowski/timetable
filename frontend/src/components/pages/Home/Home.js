@@ -7,7 +7,7 @@ import {initUser} from "../../../ME";
 import Profile from "../../auth/Profile";
 import Logout from "../../auth/logout";
 
-const Home = () => {
+export const Home = () => {
     const navigate = useNavigate();
     const [state, setState] = useState("not loaded") // loading state
     const {isAuthenticated, user} = useAuth0();
