@@ -48,10 +48,12 @@ role - студент, преподаватель
 ### Event
 | name | type | constrains |
 | ---- | ---- | ---------- |
+| id   | Integer|  primary_key|
 | name |string(100)|unique, not null|
 | location_id |Integer| not null|
 | members | reference to UserEvent | nullable |
-|time | timedate | not_null | 
+|time | int | not_null | 
+|week_day | int | not_null | 
 
 ### UserEvent
 | name | type | constrains |
@@ -97,3 +99,6 @@ User Teacher (10-100)
 
 ## СУБД
 PostgreSQL
+
+## ER Diagram
+![Untitled Diagram](https://user-images.githubusercontent.com/26060058/145798526-1858e6b6-15af-49ff-bcf8-f276f72ae278.jpg)
