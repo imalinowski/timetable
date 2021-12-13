@@ -21,8 +21,8 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: timetable    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: 'frontend/'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_NAME: spbutimetable    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: './frontend/'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '10.x'                # set this to the node version to use
 
 jobs:
@@ -40,6 +40,7 @@ jobs:
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
+        cd frontend
         npm install
         npm run build --if-present
         npm run test --if-present
