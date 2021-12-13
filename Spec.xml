@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISSPECS>
+	<DESCRIPTION>
+		<TITLE>TimeTable</TITLE>
+		<SUBJ>Education</SUBJ>
+	</DESCRIPTION>
+	<DATA>
+		<ENTITY ent_id="User">
+			<PROPERTY>id</PROPERTY>
+			<PROPERTY>email</PROPERTY>
+			<PROPERTY>name</PROPERTY>
+			<PROPERTY>role</PROPERTY>
+			<PROPERTY>group_id</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Group">
+			<PROPERTY>id</PROPERTY>
+			<PROPERTY>name</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Event">
+			<PROPERTY>id</PROPERTY>
+			<PROPERTY>name</PROPERTY>
+			<PROPERTY>location_id</PROPERTY>
+			<PROPERTY>members</PROPERTY>
+			<PROPERTY>time</PROPERTY>
+			<PROPERTY>week_day</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="UserEvent">
+			<PROPERTY>user_id</PROPERTY>
+			<PROPERTY>event_id</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Location">
+			<PROPERTY>location_id</PROPERTY>
+			<PROPERTY>name</PROPERTY>
+			<PROPERTY>coordinates</PROPERTY>
+		</ENTITY>
+		<RELATIONSHIP ent_ids="Event Location">
+			<PROPERTY>many to one</PROPERTY>
+		</RELATIONSHIP>
+		<RELATIONSHIP ent_ids="User Event">
+			<PROPERTY>many to many</PROPERTY>
+		</RELATIONSHIP>
+		<CONSTRAINT>
+        Имена пользователей не более 100 символов
+        </CONSTRAINT>
+        <CONSTRAINT>
+        Один пользователь не может пойти на два мероприятия одновременно
+        </CONSTRAINT>
+	</DATA>
+	<ROLES>
+		<ROLE>
+			<TITLE>Student</TITLE>
+			<RESPONSIBILITY>просмотр своего расписания</RESPONSIBILITY>
+			<RESPONSIBILITY>просмотр всех событий</RESPONSIBILITY>
+			<RESPONSIBILITY>запись на участие в событии</RESPONSIBILITY>
+			<TOTALUSERS>не ограничено</TOTALUSERS>
+		</ROLE>
+		<ROLE>
+			<TITLE>Teacher</TITLE>
+			<RESPONSIBILITY>просмотр своего расписания</RESPONSIBILITY>
+			<RESPONSIBILITY>просмотр всех событий</RESPONSIBILITY>
+			<RESPONSIBILITY>запись на участие в событии</RESPONSIBILITY>
+			<RESPONSIBILITY>создание событий</RESPONSIBILITY>
+			<TOTALUSERS>от 1</TOTALUSERS>
+		</ROLE>
+	</ROLES>
+	<TECHSPEC>
+        <TYPE>Interface App</TYPE>
+		<DEVTOOLS>
+			<DEV>React</DEV>
+			<DEV>Kotlin</DEV>
+			<DEV>Ktor</DEV>
+			<DEV>Exposed</DEV>
+			<DEV>Axios</DEV>
+		</DEVTOOLS>
+		<DBMS>
+			<TITLE>PostgreSQL</TITLE>
+			<VERSION>14</VERSION>
+			<REASONING>
+            поддержка БД неограниченного размера;
+            надёжные механизмы транзакций;
+            расширяемая система встроенных языков программирования;
+            легкая расширяемость.
+            Postgresql поддерживает обширный список типов данных, поддержка JSON, может обрабатывать много данных, для большинства существующих типов данных могут храниться массивы значений
+            </REASONING>
+		</DBMS>
+	</TECHSPEC>
+</ISSPECS>
+
