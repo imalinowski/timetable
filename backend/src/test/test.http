@@ -51,6 +51,9 @@ GET http://localhost:8080/event
 POST http://localhost:8080/event/5/adduser/1
 Content-Type: application/json
 
+###
+DELETE http://localhost:8080/event/17/deleteuser/2
+
 ###LOCATION
 GET http://localhost:8080/location
 

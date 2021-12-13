@@ -9,6 +9,7 @@ function TimeTableOfDay(props) {
     return (
       <div className={styles.card}>
         <h1 className={styles.Period}>{ (event.name) || "subject" }</h1>
+        <h1 className={styles.Teacher}>{ (event.location.name) || "subject" }</h1>
         <br /><br /><br /><br /><br />
         <p className={styles.Time}>{periodTime[today][event.time]}</p>
       </div>

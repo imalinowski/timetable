@@ -29,6 +29,17 @@ const Events = () => {
         }
     }
 
+    const leave = async (event_id) => {
+        try {
+            const result = await axios.delete(serverURL + "event/" + event_id + "/deleteuser/" + ME.id)
+            window.alert(result.data)
+            loadEvents().then(r => setEvents(r)) // update events
+            await initTimeTable()
+        } catch (err) {
+            window.alert(err.response.data)
+        }
+    }
+
     const Event = (props) => {
         const {event} = props;
         const part = event.members.find(m => m.id === ME.id)
@@ -39,6 +50,9 @@ const Events = () => {
                 <p className={styles.Time}>{days[event.week_day].short}</p>
                 {!part && (<button className={styles.button} onClick={() => enroll(event.id)}>
                     Enroll
+                </button>)}
+                {part && (<button className={styles.button} onClick={() => leave(event.id)}>
+                    Leave
                 </button>)}
             </div>
         );

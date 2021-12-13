@@ -82,6 +82,34 @@ fun Route.eventRouting() {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
             }
         }
+        delete("{id}/deleteuser/{userid}") {
+            try {
+                val eventId = call.parameters["id"]?.toInt() ?: return@delete call.respondText(
+                    "Missing or malformed id",
+                    status = HttpStatusCode.BadRequest
+                )
+                val userId = call.parameters["userid"]?.toInt() ?: return@delete call.respondText(
+                    "Missing or malformed user id",
+                    status = HttpStatusCode.BadRequest
+                )
+                transaction {
+                    val user = UserEntity.find { UserTable.id eq userId }.let {
+                        if (it.empty()) throw IllegalStateException("User with id = $userId not exist!")
+                        it.first()
+                    }
+                    val event = EventEntity.find { EventTable.id eq eventId }.let {
+                        if (it.empty()) throw IllegalStateException("Event with id = $eventId not exist!")
+                        it.first()
+                    }
+                    val copy = event.members.toMutableList().apply { remove(user) }
+                    event.members = SizedCollection(copy)
+                    events = getEventsDB()
+                }
+                call.respondText("User deleted from event correctly", status = HttpStatusCode.Accepted)
+            } catch (e: Throwable) {
+                call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
+            }
+        }
     }
 }
 
