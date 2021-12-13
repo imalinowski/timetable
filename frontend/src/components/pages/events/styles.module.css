@@ -1,0 +1,176 @@
+/* entire content wrapper */
+.contentWrapper {
+    min-height: 100vh;
+    background-size: contain;
+    background: radial-gradient(50% 50% at 50% 50%, #301e3e 0%, #1b161f 100%) no-repeat center;
+}
+
+/* Title section  */
+.titleSection {
+    padding-top: 50px;
+    text-align: center;
+    color: white;
+}
+
+.mainTitle {
+    font-size: 4.3rem;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.subTitle {
+    font-size: 1.8rem;
+    color: #d1d1d1;
+}
+
+/* footer section  */
+.bottomTitle {
+    display: flex;
+    font-size: 1.8rem;
+    color: aliceblue;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.brandName {
+    height: 3rem;
+    width: 10rem;
+}
+
+.Time {
+    font-family: Segoe UI;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 350;
+    text-align: left;
+}
+
+.card {
+    margin: 2rem 2rem 2rem 0;
+    padding: 2.5rem;
+    width: calc(100% / 2 - 1rem);
+    box-shadow: 0 0 28px 4px rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    color: white;
+    border-radius: 15px;
+    /* display: flex; */
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.Period {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/* input card section */
+.MiddleContent {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.LoginBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(
+            152.97deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    height: 65%;
+    width: 30%;
+    border-top: none;
+    border-left: none;
+    border-radius: 16px;
+}
+
+.selectBox {
+    height: 40px;
+    width: 250px;
+    padding: 0 2rem;
+    font-size: 15px;
+    border: 2px solid #878787;
+    border-radius: 15px;
+    color: aliceblue;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 96%;
+    background-position-y: 5px;
+    z-index: 2;
+}
+
+.selectBox:focus-visible {
+    outline: none;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+}
+
+.selectOption {
+    font-size: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.selectSection:nth-child(2) {
+    margin: 6rem 0;
+}
+
+.showBtn {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.itemMargin {
+    margin: 5px;
+    text-align: start;
+}
+
+.button {
+    color: white;
+    margin: 20px;
+    padding: 10px 15px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 30px;
+    border: none;
+    background: transparent;
+    transition: box-shadow 0.5s;
+    cursor: pointer;
+}
+
+.button:hover {
+    box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+/* break points  */
+@media (max-width: 700px) {
+    .contentWrapper {
+        background-size: cover;
+    }
+
+    .LoginBox {
+        width: 75%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .LoginBox {
+        width: 85%;
+    }
+}
