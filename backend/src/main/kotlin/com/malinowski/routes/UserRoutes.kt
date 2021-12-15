@@ -9,7 +9,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.lang.IllegalStateException
 
 var users = getUsersDB()
 fun getUsersDB() = transaction {
@@ -34,20 +33,20 @@ fun Route.userRouting() {
             else
                 call.respondText(format.encodeToString(user), status = HttpStatusCode.Accepted)
         }
-        get("{id}/events"){
+        get("{id}/events") {
             val id = call.parameters["id"]?.toInt() ?: return@get call.respondText(
                 "Missing or malformed id",
                 status = HttpStatusCode.BadRequest
             )
             try {
-                val user = users.find { it.id == id} ?: throw IllegalStateException("Users with id $id not found")
+                val user = users.find { it.id == id } ?: throw IllegalStateException("Users with id $id not found")
                 val events = events.filter { event ->
                     event.members.contains(user)
                 }
                 println("----------------------DEBUG-USER-EVENTS----------------------")
                 println("$id > ${events.joinToString()}")
                 call.respondText(format.encodeToString(events), status = HttpStatusCode.Accepted)
-            }catch (e: Throwable) {
+            } catch (e: Throwable) {
                 call.respondText("${e.message}", status = HttpStatusCode.BadRequest)
             }
         }
@@ -77,8 +76,18 @@ fun Route.userRouting() {
         post { // return id of a new user or existing one
             try {
                 val user = call.receive<User>()
-                println("----------------------DEBUG-GET-USER----------------------")
+                println("----------------------DEBUG-POST-USER----------------------")
                 println(format.encodeToString(user))
+
+                if(user.id != 0) try {
+                    tryUpdateUser(user)
+                    call.respondText("${user.id} updated", status = HttpStatusCode.Accepted)
+                    return@post
+                } catch (e: Throwable) {
+                    println("----------------------DEBUG-POST-USER----------------------")
+                    println("User ${user.id} not found")
+                }
+
                 val exUser = users.find { it.name == user.name && it.email == user.email }
                 if (exUser != null) {
                     call.respondText("${exUser.id}", status = HttpStatusCode.Created)
@@ -108,6 +117,17 @@ fun Route.userRouting() {
                 println(e.message.toString())
                 call.respondText(e.message ?: "error", status = HttpStatusCode.BadRequest)
             }
+        }
+    }
+}
+
+fun tryUpdateUser(user: User) {
+    transaction {
+        UserEntity[user.id].apply {
+            name = user.name
+            email = user.email
+            groupId = user.groupId
+            role = user.role
         }
     }
 }

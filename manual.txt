@@ -34,3 +34,9 @@ Manual TimeTable
 8. Новая группа - POST "/group" body - JSON (id:int, name: string)
 
 9. Новая локация - POST "/location" body - JSON (name: string, coordinates: string)
+
+10. Одобрять/удалять записи студентов - 
+10.1 Получить событие - GET "/event" (members - участники)  
+10.2 удалить студента из события DELETE "/event/{id}/deleteuser/{userid}"
+
+11. Добавлять/Удалять новых Teacher - POST "user" body - {id, role}
